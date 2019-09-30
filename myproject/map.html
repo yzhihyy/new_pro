@@ -1,0 +1,165 @@
+<!--<!doctype html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">-->
+<!--    <title>浏览器精确定位</title>-->
+<!--    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />-->
+<!--    <style>-->
+<!--        html,body,#container{-->
+<!--            height:100%;-->
+<!--        }-->
+
+<!--    </style>-->
+<!--<body>-->
+<!--<div id='container'></div>-->
+
+<!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=9734882e227198dbe00ac062d681c49c"></script>-->
+
+<!--<script>-->
+<!--var map, geolocation;-->
+
+<!--//加载地图，调用浏览器定位服务-->
+
+<!--map = new AMap.Map('container', {-->
+
+<!--resizeEnable: true-->
+
+<!--});-->
+
+<!--map.plugin('AMap.Geolocation', function() {-->
+
+<!--geolocation = new AMap.Geolocation({-->
+
+<!--enableHighAccuracy: true, //是否使用高精度定位，默认:true-->
+
+<!--timeout: 10000, //超过10秒后停止定位，默认：无穷大-->
+
+<!--buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)-->
+
+<!--zoomToAccuracy: true, //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false-->
+
+<!--buttonPosition: 'RB'-->
+
+<!--});-->
+
+<!--map.addControl(geolocation);-->
+
+<!--geolocation.getCurrentPosition();-->
+
+<!--AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息-->
+
+<!--AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息-->
+
+<!--});-->
+
+<!--//解析定位结果-->
+
+<!--function onComplete(data) {-->
+
+<!--console.log(data);-->
+
+<!--console.log(data.addressComponent.province);-->
+
+
+<!--console.log('纬度：' + data.position.getLat());-->
+
+<!--console.log('经度：' + data.position.getLng());-->
+
+<!--}-->
+
+
+<!--// 解析定位错误信息-->
+
+<!--function onError(data) {-->
+
+<!--console.log('定位失败');-->
+
+<!--}-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>自定义点标记</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+    <style>
+        html, body, #container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .custom-content-marker {
+            position: relative;
+            width: 25px;
+            height: 34px;
+        }
+
+        .custom-content-marker img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .custom-content-marker .close-btn {
+            position: absolute;
+            top: -20px;
+            right: 5px;
+            width: 15px;
+            height: 15px;
+            font-size: 12px;
+            color: red;
+            text-align: center;
+            line-height: 15px;
+        }
+    </style>
+    <script src="layuicity/mods/layarea.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=9734882e227198dbe00ac062d681c49c"></script>
+<script type="text/javascript">
+    var position = new AMap.LngLat(116.397428, 39.90923);//取的获取当前位置的经纬度
+
+
+    // 创建地图实例
+    var map = new AMap.Map("container", {
+        zoom: 13,
+        center: position,
+        resizeEnable: true
+    });
+//for循环
+    // 点标记显示内容，HTML要素字符串
+    var markerContent = '' +
+        '<div class="custom-content-marker">' +
+        '   <img src="http://kk.51.com/refer?url=https://mmbiz.qpic.cn/mmbiz_gif/0OX6u7ibYZDZjwFs3UTLqCl1fH2YaiaFicHI8LBLg75JdebicgzoyOjhqVLFjd0ic0rtITSkIyzAFehtxe9PA8l9iatA/640?wx_fmt=gif">' +
+        '   <div class="close-btn" onclick="clearMarker()">333</div>' +
+        '</div>';
+
+    var marker = new AMap.Marker({
+        position: [119.24685628255209, 26.102514919704863],//position代表是上面默认的位置
+        // 将 html 传给 content
+        content: markerContent,
+        // 以 icon 的 [center bottom] 为原点
+        offset: new AMap.Pixel(-13, -30)
+    });
+
+    // 将 markers 添加到地图
+    map.add(marker);
+
+    // 清除 marker
+    function clearMarker() {
+
+        map.remove(marker);
+    }
+
+</script>
+</body>
+</html>
